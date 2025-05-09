@@ -23,7 +23,7 @@ function GoogleLib() {
           <Link to="/">
             <section className="flex gap-2 items-center text-zinc-700 dark:text-zinc-500 transition-colors hover:text-[#D9A066] dark:hover:text-white">
               <svg className="w-6 h-6">
-                <use href="/Icons.svg#Angle-Left"></use>
+                <use href="Icons.svg#Angle-Left"></use>
               </svg>
               <h1>View All</h1>
             </section>
@@ -37,7 +37,7 @@ function GoogleLib() {
                 width="20"
                 height="20"
               >
-                <use href="/Icons.svg#Search" />
+                <use href="Icons.svg#Search" />
               </svg>
             </div>
             <div className="w-full">
@@ -70,7 +70,7 @@ function GoogleLib() {
                     width="40"
                     height="40"
                   >
-                    <use href={`/Icons.svg#${icon.id}`} />
+                    <use href={`Icons.svg#${icon.id}`} />
                   </svg>
                 )}
                 <h1 className="text-xl font-semibold">{icon.title}</h1>
@@ -84,21 +84,21 @@ function GoogleLib() {
                   width="22"
                   height="22"
                 >
-                  <use href="/Icons.svg#Copi" />
+                  <use href="Icons.svg#Copi" />
                 </svg>
                 <svg
                   className=" hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110"
                   width="22"
                   height="22"
                 >
-                  <use href="/Icons.svg#Download" />
+                  <use href="Icons.svg#Download" />
                 </svg>
                 <svg
                   className=" hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110"
                   width="22"
                   height="22"
                 >
-                  <use href="/Icons.svg#WebLoad" />
+                  <use href="Icons.svg#WebLoad" />
                 </svg>
               </div>
             </div>

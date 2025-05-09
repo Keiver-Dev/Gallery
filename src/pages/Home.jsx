@@ -20,7 +20,7 @@ function Home() {
       <section className="flex w-full items-center border-b border-[#D9A066] dark:border-zinc-700 gap-2 p-2">
         <div className="flex">
           <svg className="text-[#D9A066] dark:text-zinc-400" width="20" height="20">
-            <use href="/Icons.svg#Search"></use>
+            <use href="Icons.svg#Search"></use>
           </svg>
         </div>
         <div className="w-full">
@@ -52,7 +52,7 @@ function Home() {
                   width="40"
                   height="40"
                 >
-                  <use href={`/Icons.svg#${icon.id}`} />
+                  <use href={`Icons.svg#${icon.id}`} />
                 </svg>
               )}
               <h1 className="text-xl font-semibold">{icon.title}</h1>
@@ -64,21 +64,21 @@ function Home() {
                 width="22"
                 height="22"
               >
-                <use href="/Icons.svg#Copi" />
+                <use href="Icons.svg#Copi" />
               </svg>
               <svg
                 className=" hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110"
                 width="22"
                 height="22"
               >
-                <use href="/Icons.svg#Download" />
+                <use href="Icons.svg#Download" />
               </svg>
               <svg
                 className=" hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110"
                 width="22"
                 height="22"
               >
-                <use href="/Icons.svg#WebLoad" />
+                <use href="Icons.svg#WebLoad" />
               </svg>
             </div>
           </div>

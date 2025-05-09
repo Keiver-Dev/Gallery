@@ -7,12 +7,12 @@ export const Browser = [
     category: "Browser",
   },
   {
-    Image: "/icons/Edge.png",
+    Image: "icons/Edge.png",
     title: "Edge",
     category: "Browser",
   },
   {
-    Image: "/icons/Firefox.png",
+    Image: "icons/Firefox.png",
     title: "Firefox",
     category: "Browser",
   },
@@ -25,7 +25,7 @@ export const Software = [
     category: "Software",
   },
   {
-    Image: "/icons/Gitlab.png",
+    Image: "icons/Gitlab.png",
     title: "GitLab",
     category: "Software",
   },
@@ -37,11 +37,6 @@ export const Software = [
 ];
 
 export const Framework = [
-  {
-    Image: "/icons/Astro.png",
-    title: "Astro",
-    category: "Framework",  
-  },
   {
     id: "Tailwind",
     title: "Tailwind",
@@ -56,7 +51,7 @@ export const Framework = [
 
 export const Google = [
   {
-    Image: "/icons/FirebaseStudio.png",
+    Image: "icons/FirebaseStudio.png",
     title: "Firebase Studio",
     category: "Google",
   },
