@@ -1,6 +1,7 @@
 import { Framework as FrameworkData } from "../data/Data";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import Modal from "../components/Modal";
 import { useState } from "react";
 
 function FrameworkLib() {
@@ -9,6 +10,31 @@ function FrameworkLib() {
   const filteredIcons = FrameworkData.filter((icon) =>
     icon.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // 💡 Función de copiar SVG
+  const copiarIcono = (id) => {
+    const icono = FrameworkData.find((icon) => icon.id === id && icon.copy);
+    if (icono && icono.copy) {
+      navigator.clipboard
+        .writeText(icono.copy)
+        .then(() => {
+          setModalMessage(`SVG de ${id} Icon copiado al portapapeles`);
+          setIsModalOpen(true);
+        })
+        .catch((err) => {
+          console.error("Error al copiar:", err);
+          setModalMessage(`Hubo un error al copiar el SVG de ${id}`);
+          setIsModalOpen(true);
+        });
+    } else {
+      setModalMessage(`No se encontró el SVG para ${id}`);
+      setIsModalOpen(true);
+    }
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  
   return (
     <motion.section
       className="flex-[88%] flex flex-col"
@@ -78,13 +104,19 @@ function FrameworkLib() {
                 </span>
               </div>
               <div className="flex col gap-4 mt-auto">
-                <svg
-                  className=" hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110"
-                  width="22"
-                  height="22"
-                >
-                  <use href="Icons.svg#Copi" />
-                </svg>
+                {icon.copy && (
+                  <button
+                    onClick={() => copiarIcono(icon.id)}
+                    className="hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110 cursor-pointer"
+                  >
+                    <svg
+                      width="22"
+                      height="22"
+                    >
+                      <use href="Icons.svg#Copi" />
+                    </svg>
+                  </button>
+                )}
                 <svg
                   className=" hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110"
                   width="22"
@@ -104,6 +136,11 @@ function FrameworkLib() {
           ))}
         </section>
       </section>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        message={modalMessage}
+      />
     </motion.section>
   );
 }

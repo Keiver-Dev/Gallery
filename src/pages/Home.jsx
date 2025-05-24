@@ -1,5 +1,6 @@
 import { Icons } from "../data/Data";
 import { motion } from "framer-motion";
+import Modal from "../components/Modal";
 import { useState } from "react";
 
 function Home() {
@@ -8,6 +9,30 @@ function Home() {
   const filteredIcons = Icons.filter((icon) =>
     icon.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // 💡 Función de copiar SVG
+  const copiarIcono = (id) => {
+    const icono = Icons.find((icon) => icon.id === id && icon.copy);
+    if (icono && icono.copy) {
+      navigator.clipboard
+        .writeText(icono.copy)
+        .then(() => {
+          setModalMessage(`SVG de ${id} Icon copiado al portapapeles`);
+          setIsModalOpen(true);
+        })
+        .catch((err) => {
+          console.error("Error al copiar:", err);
+          setModalMessage(`Hubo un error al copiar el SVG de ${id}`);
+          setIsModalOpen(true);
+        });
+    } else {
+      setModalMessage(`No se encontró el SVG para ${id}`);
+      setIsModalOpen(true);
+    }
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   return (
     <motion.section
@@ -19,7 +44,11 @@ function Home() {
     >
       <section className="flex w-full items-center border-b border-[#D9A066] dark:border-zinc-700 gap-2 p-2">
         <div className="flex">
-          <svg className="text-[#D9A066] dark:text-zinc-400" width="20" height="20">
+          <svg
+            className="text-[#D9A066] dark:text-zinc-400"
+            width="20"
+            height="20"
+          >
             <use href="Icons.svg#Search"></use>
           </svg>
         </div>
@@ -33,6 +62,7 @@ function Home() {
           />
         </div>
       </section>
+
       <section className="flex p-12 gap-4 flex-wrap justify-center items-center overflow-auto">
         {filteredIcons.map((icon, index) => (
           <div
@@ -56,34 +86,43 @@ function Home() {
                 </svg>
               )}
               <h1 className="text-xl font-semibold">{icon.title}</h1>
-              <span className="text-sm dark:text-zinc-400">{icon.category}</span>
+              <span className="text-sm dark:text-zinc-400">
+                {icon.category}
+              </span>
             </div>
+
             <div className="flex col gap-4 mt-auto">
-              <svg
-                className=" hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110"
-                width="22"
-                height="22"
-              >
-                <use href="Icons.svg#Copi" />
-              </svg>
-              <svg
-                className=" hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110"
-                width="22"
-                height="22"
-              >
-                <use href="Icons.svg#Download" />
-              </svg>
-              <svg
-                className=" hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110"
-                width="22"
-                height="22"
-              >
-                <use href="Icons.svg#WebLoad" />
-              </svg>
+              {icon.copy && (
+                <button
+                  onClick={() => copiarIcono(icon.id)}
+                  className="hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:scale-110"
+                >
+                  <svg width="22" height="22">
+                    <use href="Icons.svg#Copi" />
+                  </svg>
+                </button>
+              )}
+
+              <button className="hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:scale-110">
+                <svg width="22" height="22">
+                  <use href="Icons.svg#Download" />
+                </svg>
+              </button>
+
+              <button className="hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:scale-110">
+                <svg width="22" height="22">
+                  <use href="Icons.svg#WebLoad" />
+                </svg>
+              </button>
             </div>
           </div>
         ))}
       </section>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        message={modalMessage}
+      />
     </motion.section>
   );
 }

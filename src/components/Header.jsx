@@ -31,7 +31,7 @@ function Header() {
         <h1 className="font-bold text-lg text-[#D9A066] dark:text-white">Gallery</h1>
       </section>
       <section className="flex gap-3">
-        <a href="https://github.com/Keiver-Dev/SVG-Gallery">
+        <a href="https://github.com/Keiver-Dev/Gallery">
           <svg className="text-[#D9A066] dark:text-zinc-400 hover:text-[#45C4B0] dark:hover:text-[#DAFDBA] transition-colors duration-200" width="24" height="24">
             <use href="Icons.svg#GitHub"></use>
           </svg>
