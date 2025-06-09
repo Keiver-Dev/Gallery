@@ -1,91 +1,72 @@
 import { Icons } from "../data/Data";
 import { Link, useLocation } from "react-router-dom";
+import { useState } from "react";
 
 function SideBar() {
-  const location = useLocation(); // <- Detector de ruta actual.
+  const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const categoryBrowser = "Browser";
-  const categorySoftware = "Software";
-  const categoryFramework = "Framework";
-  const categoryGoogle = "Google";
-
-  const iconCountBrowser = Icons.filter(
-    (icon) => icon.category === categoryBrowser
-  ).length;
-  const iconCountSoftware = Icons.filter(
-    (icon) => icon.category === categorySoftware
-  ).length;
-  const iconCountFramework = Icons.filter(
-    (icon) => icon.category === categoryFramework
-  ).length;
-  const iconCountGoogle = Icons.filter(
-    (icon) => icon.category === categoryGoogle
-  ).length;
+  const categories = [
+    { name: "Browser", count: Icons.filter(i => i.category === "Browser").length },
+    { name: "Software", count: Icons.filter(i => i.category === "Software").length },
+    { name: "Framework", count: Icons.filter(i => i.category === "Framework").length },
+    { name: "Google", count: Icons.filter(i => i.category === "Google").length },
+  ];
 
   const baseBtn =
     "flex justify-between transition-all duration-200 p-2 w-full rounded-md text-left hover:bg-[#D9A066] dark:hover:bg-zinc-800 text-zinc-700 hover:text-[#F1FAEE] dark:text-white dark:hover:text-[#9AEBA3] hover:scale-105";
   const activeBtn = "bg-[#D9A066] dark:bg-zinc-800 text-white scale-105";
 
   return (
-    <aside className="flex flex-col flex-[12%] border-e-2 border-[#D9A066] dark:border-zinc-700 border-opacity-35 rounded-sm gap-2 p-2">
-      {/* Navegación principal */}
-      <section className="flex w-full">
-        <Link to="/" className="w-full block">
+    <>
+      {/* Botón hamburguesa solo visible en móvil */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="md:hidden p-2 fixed top-3 left-2 z-50 bg-zinc-900 text-white rounded"
+      >
+        ☰
+      </button>
+
+      {/* Sidebar responsivo */}
+      <aside
+        className={`fixed top-0 left-0 h-full w-64 z-40 bg-[#F1FAEE] dark:bg-zinc-900 p-4 shadow-lg transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } md:relative md:translate-x-0 md:flex md:flex-col md:w-64 border-r border-[#D9A066] dark:border-zinc-700`}
+      >
+        {/* Cerrar en móvil */}
+        <div className="flex justify-end mb-2 md:hidden">
           <button
-            className={`${baseBtn} ${
-              location.pathname === "/" ? activeBtn : ""
-            }`}
+            onClick={() => setIsOpen(false)}
+            className="text-zinc-600 dark:text-zinc-400 text-xl"
           >
+            ✕
+          </button>
+        </div>
+
+        <Link to="/" onClick={() => setIsOpen(false)}>
+          <button className={`${baseBtn} ${location.pathname === "/" ? activeBtn : ""}`}>
             <h1 className="font-semibold text-sm tracking-wide">All</h1>
           </button>
         </Link>
-      </section>
 
-      <p className="text-zinc-400 w-full border-b border-[#D9A066] dark:border-zinc-700 border-opacity-30"></p>
+        <p className="my-2 border-b border-[#D9A066] dark:border-zinc-700 border-opacity-30" />
 
-      <section className="flex flex-col gap-2">
-        <Link to="/Browser">
-          <button
-            className={`${baseBtn} ${
-              location.pathname === "/Browser" ? activeBtn : ""
-            }`}
-          >
-            <h1 className="font-semibold text-sm tracking-wide">Browser</h1>
-            <p>{iconCountBrowser}</p>
-          </button>
-        </Link>
-        <Link to="/Software">
-          <button
-            className={`${baseBtn} ${
-              location.pathname === "/Software" ? activeBtn : ""
-            }`}
-          >
-            <h1 className="font-semibold text-sm tracking-wide">Software</h1>
-            <p>{iconCountSoftware}</p>
-          </button>
-        </Link>
-        <Link to="/Framework">
-          <button
-            className={`${baseBtn} ${
-              location.pathname === "/Framework" ? activeBtn : ""
-            }`}
-          >
-            <h1 className="font-semibold text-sm tracking-wide">Framework</h1>
-            <p>{iconCountFramework}</p>
-          </button>
-        </Link>
-        <Link to="/Google" className="w-full block">
-          <button
-            className={`${baseBtn} ${
-              location.pathname === "/Google" ? activeBtn : ""
-            }`}
-          >
-            <h1 className="font-semibold text-sm tracking-wide">Google</h1>
-            <p>{iconCountGoogle}</p>
-          </button>
-        </Link>
-      </section>
-    </aside>
+        <section className="flex flex-col gap-2">
+          {categories.map(({ name, count }) => (
+            <Link key={name} to={`/${name}`} onClick={() => setIsOpen(false)}>
+              <button
+                className={`${baseBtn} ${
+                  location.pathname === `/${name}` ? activeBtn : ""
+                }`}
+              >
+                <h1 className="font-semibold text-sm tracking-wide">{name}</h1>
+                <p>{count}</p>
+              </button>
+            </Link>
+          ))}
+        </section>
+      </aside>
+    </>
   );
 }
 

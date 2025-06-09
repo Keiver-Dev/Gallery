@@ -18,7 +18,7 @@ function App() {
   const location = useLocation();
 
   return (
-    <main className="flex flex-col bg-[#F1FAEE] text-black dark:bg-zinc-900 dark:text-white h-[100vh]">
+    <main className="flex flex-col bg-[#F1FAEE] text-black dark:bg-zinc-900 dark:text-white h-screen w-screen">
       <Header />
       <div className="flex h-[94%]">
         <SideBar />

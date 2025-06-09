@@ -10,7 +10,6 @@ function Home() {
     icon.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // 💡 Función de copiar SVG
   const copiarIcono = (id) => {
     const icono = Icons.find((icon) => icon.id === id && icon.copy);
     if (icono && icono.copy) {
@@ -36,13 +35,13 @@ function Home() {
 
   return (
     <motion.section
-      className="flex-[88%] flex flex-col"
+      className="flex-[88%] flex flex-col w-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.2 }}
     >
-      <section className="flex w-full items-center border-b border-[#D9A066] dark:border-zinc-700 gap-2 p-2">
+      <section className="flex items-center border-b border-[#D9A066] dark:border-zinc-700 gap-2 p-4 w-full">
         <div className="flex">
           <svg
             className="text-[#D9A066] dark:text-zinc-400"
@@ -63,13 +62,13 @@ function Home() {
         </div>
       </section>
 
-      <section className="flex p-12 gap-4 flex-wrap justify-center items-center overflow-auto">
+      <section className="flex flex-wrap justify-center items-center gap-4 p-4 sm:p-12 overflow-y-auto max-h-screen">
         {filteredIcons.map((icon, index) => (
           <div
             key={icon.id || index}
-            className="flex flex-col border border-[#D9A066] dark:border-zinc-800 rounded-lg p-4 w-56 h-44 hover:bg-[#D9A066] dark:hover:bg-zinc-800 hover:text-white dark:hover:text-[#DAFDBA] hover:shadow-lg hover:scale-105 transition-all duration-300"
+            className="flex flex-col border border-[#D9A066] dark:border-zinc-800 rounded-lg p-4 w-full sm:w-56 h-auto sm:h-44 hover:bg-[#D9A066] dark:hover:bg-zinc-800 hover:text-white dark:hover:text-[#DAFDBA] hover:shadow-lg hover:scale-105 transition-all duration-300"
           >
-            <div className="flex flex-col items-start gap-2">
+            <div className="flex flex-col items-start gap-2 w-full">
               {icon.Image ? (
                 <img
                   src={icon.Image}
@@ -85,13 +84,11 @@ function Home() {
                   <use href={`Icons.svg#${icon.id}`} />
                 </svg>
               )}
-              <h1 className="text-xl font-semibold">{icon.title}</h1>
-              <span className="text-sm dark:text-zinc-400">
-                {icon.category}
-              </span>
+              <h1 className="text-lg sm:text-xl font-semibold">{icon.title}</h1>
+              <span className="text-sm dark:text-zinc-400">{icon.category}</span>
             </div>
 
-            <div className="flex col gap-4 mt-auto">
+            <div className="flex gap-4 mt-4">
               {icon.copy && (
                 <button
                   onClick={() => copiarIcono(icon.id)}
@@ -118,6 +115,7 @@ function Home() {
           </div>
         ))}
       </section>
+
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

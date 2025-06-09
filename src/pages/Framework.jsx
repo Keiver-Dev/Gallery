@@ -6,12 +6,13 @@ import { useState } from "react";
 
 function FrameworkLib() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   const filteredIcons = FrameworkData.filter((icon) =>
     icon.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // 💡 Función de copiar SVG
   const copiarIcono = (id) => {
     const icono = FrameworkData.find((icon) => icon.id === id && icon.copy);
     if (icono && icono.copy) {
@@ -32,55 +33,49 @@ function FrameworkLib() {
     }
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  
   return (
     <motion.section
-      className="flex-[88%] flex flex-col"
+      className="flex flex-col w-full"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.2 }}
     >
-      <section className="flex-[88%] flex flex-col">
-        <section className="flex p-12 gap-4 flex-wrap items-center overflow-auto">
-          <Link to="/">
-            <section className="flex gap-2 items-center text-zinc-700 dark:text-zinc-500 transition-colors hover:text-[#D9A066] dark:hover:text-white">
-              <svg className="w-6 h-6">
-                <use href="Icons.svg#Angle-Left"></use>
-              </svg>
-              <h1>View All</h1>
-            </section>
-          </Link>
-
-          {/* Search */}
-          <section className="flex w-full items-center border-b border-[#D9A066] dark:border-zinc-700 gap-2 p-2">
-            <div className="flex">
-              <svg
-                className="text-[#D9A066] dark:text-zinc-400"
-                width="20"
-                height="20"
-              >
-                <use href="Icons.svg#Search" />
-              </svg>
-            </div>
-            <div className="w-full">
-              <input
-                type="text"
-                placeholder="Search"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full py-2 bg-transparent text-sm text-black dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-transparent"
-              />
-            </div>
+      <section className="flex flex-col w-full p-4 md:p-8 gap-4">
+        {/* View All Button */}
+        <Link to="/" className="w-fit">
+          <section className="flex gap-2 items-center text-zinc-700 dark:text-zinc-500 transition-colors hover:text-[#D9A066] dark:hover:text-white">
+            <svg className="w-6 h-6">
+              <use href="Icons.svg#Angle-Left" />
+            </svg>
+            <h1 className="text-base">View All</h1>
           </section>
+        </Link>
 
-          {/* Cards */}
+        {/* Search */}
+        <section className="flex items-center gap-2 border-b border-[#D9A066] dark:border-zinc-700 px-2 py-1 w-full">
+          <svg
+            className="text-[#D9A066] dark:text-zinc-400"
+            width="20"
+            height="20"
+          >
+            <use href="Icons.svg#Search" />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full py-2 bg-transparent text-sm text-black dark:text-white placeholder-gray-400 focus:outline-none"
+          />
+        </section>
+
+        {/* Cards Grid */}
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full mt-4">
           {filteredIcons.map((icon, index) => (
             <div
               key={icon.id || index}
-              className="flex flex-col border border-[#D9A066] dark:border-zinc-800 rounded-lg p-4 w-56 h-44 hover:bg-[#D9A066] dark:hover:bg-zinc-800 hover:text-white dark:hover:text-[#DAFDBA] hover:shadow-lg hover:scale-105 transition-all duration-300"
+              className="flex flex-col border border-[#D9A066] dark:border-zinc-800 rounded-lg p-4 hover:bg-[#D9A066] dark:hover:bg-zinc-800 hover:text-white dark:hover:text-[#DAFDBA] hover:shadow-lg hover:scale-105 transition-all duration-300"
             >
               <div className="flex flex-col items-start gap-2">
                 {icon.Image ? (
@@ -103,29 +98,26 @@ function FrameworkLib() {
                   {icon.category}
                 </span>
               </div>
-              <div className="flex col gap-4 mt-auto">
+              <div className="flex gap-4 mt-auto">
                 {icon.copy && (
                   <button
                     onClick={() => copiarIcono(icon.id)}
-                    className="hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110 cursor-pointer"
+                    className="hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:scale-110 cursor-pointer"
                   >
-                    <svg
-                      width="22"
-                      height="22"
-                    >
+                    <svg width="22" height="22">
                       <use href="Icons.svg#Copi" />
                     </svg>
                   </button>
                 )}
                 <svg
-                  className=" hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110"
+                  className="hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:scale-110"
                   width="22"
                   height="22"
                 >
                   <use href="Icons.svg#Download" />
                 </svg>
                 <svg
-                  className=" hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:transform hover:scale-110"
+                  className="hover:text-amber-800 dark:hover:text-[#F1FAEE] duration-200 hover:scale-110"
                   width="22"
                   height="22"
                 >
@@ -136,6 +128,7 @@ function FrameworkLib() {
           ))}
         </section>
       </section>
+
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

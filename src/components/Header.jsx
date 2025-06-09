@@ -25,7 +25,7 @@ function Header() {
   return (
     <header className="flex h-[6%] p-2 border-b-2 border-[#D9A066] dark:border-zinc-700 border-opacity-35 items-center justify-between rounded-sm">
       <section className="flex items-center gap-1">
-        <svg className="w-10 h-10 p-2" width="26" height="26">
+        <svg className="xl:block w-10 h-10 p-2" width="26" height="26">
           <use href="Icons.svg#Fire"></use>
         </svg>
         <h1 className="font-bold text-lg text-[#D9A066] dark:text-white">Gallery</h1>
